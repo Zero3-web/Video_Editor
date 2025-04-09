@@ -66,11 +66,18 @@ def add_subtitles_to_video(video_path, srt_path, output_path):
                 start_time = parse_time(start_time)
                 end_time = parse_time(end_time)
 
-                # Ajustar el tamaño y posición del subtítulo
+                # Crear el clip de texto con tamaño ajustado
                 text_clip = TextClip(
-                    text, fontsize=24, color='white', bg_color='black', size=(video.w * 0.8, None), method='caption'
+                    text,
+                    fontsize=36,  # Tamaño de fuente más grande para mejor visibilidad
+                    color='white',
+                    bg_color='rgba(0, 0, 0, 0.5)',  # Fondo negro semitransparente
+                    size=(video.w * 0.8, None),  # Ancho del 80% del video, altura automática
+                    method='caption'
                 )
-                text_clip = text_clip.set_position(('center', video.h - 50)).set_start(start_time).set_end(end_time)
+                # Posicionar subtítulos en la parte inferior del video
+                text_clip = text_clip.set_position(('center', video.h - 150))  # Ajustar la posición vertical
+                text_clip = text_clip.set_start(start_time).set_end(end_time)
                 subtitles.append(text_clip)
 
         # Combinar los subtítulos con el video
